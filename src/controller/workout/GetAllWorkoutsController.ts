@@ -7,7 +7,8 @@ class GetAllWorkoutsController {
 
         const service = new GetAllWorkoutsService();
         const workouts = await service.execute(user_id);
-        
+
+
         return res.json(workouts);
     }
 }

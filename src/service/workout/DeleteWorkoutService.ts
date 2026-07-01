@@ -8,7 +8,7 @@ class DeleteWorkoutService {
         const workout = await prisma.workouts.findFirst({
             where: {
                 id: workout_id,
-                user: { id: user_id },
+                user_id: user_id,
                 deleted_at: null
             }
         });

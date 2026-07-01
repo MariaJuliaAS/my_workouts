@@ -73,11 +73,12 @@ model Exercises {
 }
 
 model Exercises_logs {
-  id         String  @id @default(uuid())
+  id         String    @id @default(uuid())
   set_number Int
   weight     Float
   reps       Int
   completed  Boolean
+  deleted_at DateTime?
 
   workout_logs    Workout_logs @relation(fields: [workout_logs_id], references: [id])
   workout_logs_id String
