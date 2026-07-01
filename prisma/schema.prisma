@@ -31,6 +31,7 @@ model Workouts {
   id         String    @id @default(uuid())
   name       String
   created_at DateTime? @default(now())
+  deleted_at DateTime?
 
   user    User   @relation(fields: [user_id], references: [id])
   user_id String
@@ -45,6 +46,7 @@ model Workout_logs {
   id           String    @id @default(uuid())
   started_at   DateTime
   completed_at DateTime?
+  deleted_at   DateTime?
 
   workouts    Workouts @relation(fields: [workouts_id], references: [id])
   workouts_id String
@@ -55,11 +57,12 @@ model Workout_logs {
 }
 
 model Exercises {
-  id    String  @id @default(uuid())
-  name  String
-  sets  Int
-  reps  Int
-  notes String?
+  id         String    @id @default(uuid())
+  name       String
+  sets       Int
+  reps       Int
+  notes      String?
+  deleted_at DateTime?
 
   workouts    Workouts @relation(fields: [workouts_id], references: [id])
   workouts_id String
@@ -92,6 +95,7 @@ model Personal_records {
   reps          Int
   note          String?
   date          DateTime? @default(now())
+  deleted_at    DateTime?
 
   user    User   @relation(fields: [user_id], references: [id])
   user_id String

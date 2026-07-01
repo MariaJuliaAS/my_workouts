@@ -6,11 +6,16 @@ class GetAllWorkoutsService {
 
         const workouts = await prisma.workouts.findMany({
             where: {
-                user: { id: user_id }
+                user: { id: user_id },
+                deleted_at: null
             },
             include: {
-                exercises: true,
-                workout_logs: true
+                exercises: {
+                    where: { deleted_at: null }
+                },
+                workout_logs: {
+                    where: { deleted_at: null }
+                },
             }
         });
 

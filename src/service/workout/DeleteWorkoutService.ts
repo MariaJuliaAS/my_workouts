@@ -6,42 +6,30 @@ class DeleteWorkoutService {
         if (!user_id) throw new Error("User ID is required");
 
         const workout = await prisma.workouts.findFirst({
-            where: { 
-                id: workout_id, 
-                user: { id: user_id } 
+            where: {
+                id: workout_id,
+                user: { id: user_id },
+                deleted_at: null
             }
         });
         if (!workout) throw new Error("Workout not found or not owned by user");
 
-        const workoutLogs = await prisma.workout_logs.findMany({
-            where: { workouts_id: workout_id },
-            select: { id: true },
+        const deleted_at = new Date();
+
+        await prisma.exercises.updateMany({
+            where: { workouts_id: workout_id, deleted_at: null },
+            data: { deleted_at }
         });
-        const workoutLogIds = workoutLogs.map(w => w.id);
 
-        if (workoutLogIds.length) {
-            await prisma.exercises_logs.deleteMany({
-                where: { workout_logs_id: { in: workoutLogIds } },
-            });
-        }
-
-        await prisma.workout_logs.deleteMany({ where: { workouts_id: workout_id } });
-
-        const exercises = await prisma.exercises.findMany({
-            where: { workouts_id: workout_id },
-            select: { id: true },
+        await prisma.workout_logs.updateMany({
+            where: { workouts_id: workout_id, deleted_at: null },
+            data: { deleted_at }
         });
-        const exerciseIds = exercises.map(e => e.id);
 
-        if (exerciseIds.length) {
-            await prisma.exercises_logs.deleteMany({
-                where: { exercise_id: { in: exerciseIds } },
-            });
-        }
-
-        await prisma.exercises.deleteMany({ where: { workouts_id: workout_id } });
-
-        await prisma.workouts.delete({ where: { id: workout_id } });
+        await prisma.workouts.update({
+            where: { id: workout_id },
+            data: { deleted_at }
+        });
 
         return {
             message: "Workout '" + workout.name + "' deleted",
