@@ -18,6 +18,8 @@ import { DeletePrController } from "./controller/personal_record/DeletePrControl
 import { CreateExerciseLogController } from "./controller/exercise_log/CreateExerciseLogController";
 import { GetPendingWorkoutLogController } from "./controller/workout_log/GetPendingWorkoutLogController";
 import { GetExerciseLogsByWorkoutLogController } from "./controller/exercise_log/GetExerciseLogsByWorkoutLogController";
+import { GetWorkoutLogDetailController } from "./controller/workout_log/GetWorkoutLogDetailController";
+import { GetAllWorkoutLogsController } from "./controller/workout_log/GetAllWorkoutLogsController";
 
 const router = Router();
 
@@ -35,6 +37,8 @@ router.delete("/workout/exercise/:id", isAuthenticated, new DeleteExerciseContro
 router.post("/workout_log/start/:workout_id", isAuthenticated, new StartWorkoutLogController().handle)
 router.put("/workout_log/completed/:workoutLog_id", isAuthenticated, new CompletedWorkoutLogController().handle)
 router.get("/workout_log/pending/:workout_id", isAuthenticated, new GetPendingWorkoutLogController().handle)
+router.get("/workout_log", isAuthenticated, new GetAllWorkoutLogsController().handle)
+router.get("/workout_log/:workout_log_id", isAuthenticated, new GetWorkoutLogDetailController().handle)
 
 router.post("/personal_record", isAuthenticated, new CreatePrController().handle)
 router.get("/personal_record", isAuthenticated, new GetAllPrController().handle)
