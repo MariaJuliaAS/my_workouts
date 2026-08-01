@@ -27,6 +27,7 @@ class GetWorkoutLogDetailService {
                             select: {
                                 id: true,
                                 name: true,
+                                notes: true
                             }
                         }
                     },
