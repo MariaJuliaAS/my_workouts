@@ -20,6 +20,11 @@ import { GetPendingWorkoutLogController } from "./controller/workout_log/GetPend
 import { GetExerciseLogsByWorkoutLogController } from "./controller/exercise_log/GetExerciseLogsByWorkoutLogController";
 import { GetWorkoutLogDetailController } from "./controller/workout_log/GetWorkoutLogDetailController";
 import { GetAllWorkoutLogsController } from "./controller/workout_log/GetAllWorkoutLogsController";
+import { CreateWeeklyPlanController } from "./controller/weekly_plan/CreateWeeklyPlanController";
+import { UpdateWeeklyPlanController } from "./controller/weekly_plan/UpdateWeeklyPlanController";
+import { DeleteWeeklyPlanController } from "./controller/weekly_plan/DeleteWeeklyPlanController";
+import { GetWeeklyPlanController } from "./controller/weekly_plan/GetWeeklyPlanController";
+import { GetHomeStatsController } from "./controller/home_stats/GetHomeStatsController";
 
 const router = Router();
 
@@ -47,5 +52,11 @@ router.delete("/personal_record/:id", isAuthenticated, new DeletePrController().
 router.post("/exercise_log", isAuthenticated, new CreateExerciseLogController().handle)
 router.get("/exercise_log/:workout_log_id", isAuthenticated, new GetExerciseLogsByWorkoutLogController().handle)
 
+router.post("/weekly_plan", isAuthenticated, new CreateWeeklyPlanController().handle)
+router.put("/weekly_plan/:plan_id", isAuthenticated, new UpdateWeeklyPlanController().handle)
+router.delete("/weekly_plan/:plan_id", isAuthenticated, new DeleteWeeklyPlanController().handle)
+router.get("/weekly_plan", isAuthenticated, new GetWeeklyPlanController().handle)
+
+router.get("/home/stats", isAuthenticated, new GetHomeStatsController().handle)
 
 export { router };

@@ -23,6 +23,7 @@ model User {
 
   workouts         Workouts[]
   personal_records Personal_records[]
+  eekly_plans      Weekly_plan[]
 
   @@map("Users")
 }
@@ -38,6 +39,7 @@ model Workouts {
 
   exercises    Exercises[]
   workout_logs Workout_logs[]
+  weekly_plans Weekly_plan[]
 
   @@map("Workouts")
 }
@@ -102,4 +104,27 @@ model Personal_records {
   user_id String
 
   @@map("Personal_records")
+}
+
+enum PlanType {
+  WORKOUT
+  REST
+  CARDIO
+}
+
+model Weekly_plan {
+  id          String    @id @default(uuid())
+  day_of_week Int
+  note        String?
+  deleted_at  DateTime?
+
+  type PlanType @default(REST)
+
+  user    User   @relation(fields: [user_id], references: [id])
+  user_id String
+
+  workout    Workouts? @relation(fields: [workout_id], references: [id])
+  workout_id String?
+
+  @@map("Weekly_plans")
 }

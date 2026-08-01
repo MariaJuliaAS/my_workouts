@@ -8,7 +8,7 @@ app.use(express.json());
 
 app.use(
     cors({
-        origin: "https://my-workouts-frontend-six.vercel.app",
+        origin: true,
         credentials: true,
         optionsSuccessStatus: 200,
     })
