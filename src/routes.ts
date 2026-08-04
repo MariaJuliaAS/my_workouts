@@ -25,6 +25,7 @@ import { UpdateWeeklyPlanController } from "./controller/weekly_plan/UpdateWeekl
 import { DeleteWeeklyPlanController } from "./controller/weekly_plan/DeleteWeeklyPlanController";
 import { GetWeeklyPlanController } from "./controller/weekly_plan/GetWeeklyPlanController";
 import { GetHomeStatsController } from "./controller/home_stats/GetHomeStatsController";
+import { GetLastCompletedWorkoutLogController } from "./controller/workout_log/GetLastCompletedWorkoutLogController";
 
 const router = Router();
 
@@ -43,6 +44,7 @@ router.post("/workout_log/start/:workout_id", isAuthenticated, new StartWorkoutL
 router.put("/workout_log/completed/:workoutLog_id", isAuthenticated, new CompletedWorkoutLogController().handle)
 router.get("/workout_log/pending/:workout_id", isAuthenticated, new GetPendingWorkoutLogController().handle)
 router.get("/workout_log", isAuthenticated, new GetAllWorkoutLogsController().handle)
+router.get("/workout_log/last-completed/:workout_id", isAuthenticated, new GetLastCompletedWorkoutLogController().handle)
 router.get("/workout_log/:workout_log_id", isAuthenticated, new GetWorkoutLogDetailController().handle)
 
 router.post("/personal_record", isAuthenticated, new CreatePrController().handle)
